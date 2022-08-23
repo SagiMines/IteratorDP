@@ -7,6 +7,10 @@ interface IPhonebook {
     get(id:number):Contact|undefined //get contact by id
     get(name:string):Contact[]|undefined //get contacts by name
     remove(id:number):Contact|undefined //remove contact by id and returns it
+    next(): {done: boolean, value?: Contact}
+    sortAlphabetic():void
+    nameContains(str:string):IterableIterator<Contact>
+    [Symbol.iterator](): IPhonebook
 }
 
 export default IPhonebook
