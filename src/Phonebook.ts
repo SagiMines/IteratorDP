@@ -54,10 +54,9 @@ class Phonebook implements IPhonebook {
         }
         return undefined
     }
-
-
-
-
-
-
 }
+
+export const createPhonebook = ():IPhonebook => {
+    return new Phonebook();
+} 
+
