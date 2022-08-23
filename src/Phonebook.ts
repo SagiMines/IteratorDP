@@ -14,7 +14,8 @@ class Phonebook implements IPhonebook {
 
     add(contact:Contact):number {
         contact.id = this._idCounter++ 
-        this._contacts.push(contact) 
+        this._contacts.push(contact)
+        this.size += 1 
         return contact.id 
     }
 
@@ -48,6 +49,7 @@ class Phonebook implements IPhonebook {
             if(contact.id === id) {
                 found = contact
                 this._contacts.splice(counter, 1)
+                this.size -= 1
                 return found
             }
             counter += 1
