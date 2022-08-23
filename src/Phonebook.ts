@@ -2,7 +2,6 @@ import IPhonebook from "./IPhonebook";
 import Contact from "./Contact";
 
 class Phonebook implements IPhonebook {
-    
     size: number
     _contacts: Contact[]
     _idCounter: number
@@ -27,14 +26,38 @@ class Phonebook implements IPhonebook {
         return
     }
 
-    get(id:number):Contact|undefined {
-        const isContact = this._contacts.find(contact => contact.id === id)
-        return isContact;
+    get(id:number):Contact|undefined;
+    get(name:string):Contact[]|undefined;
+    get(value: number | string):Contact|Contact[]|undefined {
+        if(typeof value === 'number') {
+            const isContact = this._contacts.find(contact => contact.id === value)
+            return isContact;
+        }
+        else if(typeof value === 'string') {
+            const areContacts = this._contacts.filter(contact => contact.name === value)
+            return areContacts
+        }
+        return undefined
+    
     }
 
-    get(name:string):Contact[]|undefined  {
-        const areContacts = this._contacts.filter(contact => contact.name === name)
-        return areContacts
+    remove(id:number):Contact|undefined {
+        let counter: number = 0
+        let found: Contact;
+        for(const contact of this._contacts) {
+            if(contact.id === id) {
+                found = contact
+                this._contacts.splice(counter, 1)
+                return found
+            }
+            counter += 1
+        }
+        return undefined
     }
+
+
+
+
+
 
 }
