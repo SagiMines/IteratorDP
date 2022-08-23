@@ -1,8 +1,5 @@
-interface Contact {
-    id?: number
-    name: string
-    address: string
-    phones: string[]
+class Contact {
+    constructor(public name: string, public address: string, public phones: string[], public id?: number) {}
 }
 
 export default Contact
