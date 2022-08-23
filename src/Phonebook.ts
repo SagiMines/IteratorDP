@@ -5,11 +5,13 @@ class Phonebook implements IPhonebook {
     size: number
     _contacts: Contact[]
     _idCounter: number
+    _index: number
 
     constructor() {
         this.size = 0
         this._contacts = []
         this._idCounter = 1
+        this._index = 0
     }
 
     add(contact:Contact):number {
@@ -56,6 +58,35 @@ class Phonebook implements IPhonebook {
         }
         return undefined
     }
+
+    sortAlphabetic():void {
+        this._contacts.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
+    }
+
+    nameContains(str:string): IterableIterator<Contact> {
+        const result = this._contacts.filter(contact => contact.name.toLowerCase().includes(str.toLowerCase()))
+        const iter = result[Symbol.iterator]()
+        return iter
+    }
+
+    next() {
+        if(this._index === 0) {
+            this.sortAlphabetic()
+        }
+        if (this._index === this._contacts.length) {
+            return { 
+             done: true 
+            };
+          }
+          return { 
+            done: false, 
+            value: this._contacts[this._index++]
+          };
+    }
+
+    [Symbol.iterator]() {
+        return this;
+      }
 }
 
 export const createPhonebook = ():IPhonebook => {
